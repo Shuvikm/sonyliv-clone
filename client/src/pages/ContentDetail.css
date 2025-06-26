@@ -1,0 +1,289 @@
+.content-detail-page {
+  padding: 2rem 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #ff6b6b;
+}
+
+.content-header {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.content-poster {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.content-poster img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.content-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.content-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.content-description {
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.content-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.star-icon {
+  color: #ffd700;
+}
+
+.content-genres {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.genre-tag {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.content-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.play-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.video-player-section {
+  margin-bottom: 3rem;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content-details {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.details-section {
+  margin-bottom: 2rem;
+}
+
+.details-section h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.detail-item strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.tags-section h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tags-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.error-page {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.error-page h2 {
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.error-page p {
+  color: #ccc;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .content-header {
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+  }
+  
+  .content-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-detail-page {
+    padding: 1rem 0;
+  }
+  
+  .content-header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .content-poster {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .content-title {
+    font-size: 1.8rem;
+  }
+  
+  .content-description {
+    font-size: 1rem;
+  }
+  
+  .content-meta {
+    gap: 1rem;
+  }
+  
+  .content-actions {
+    justify-content: center;
+  }
+  
+  .content-details {
+    padding: 1.5rem;
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .content-actions {
+    flex-direction: column;
+  }
+  
+  .play-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .content-details {
+    padding: 1rem;
+  }
+} 
