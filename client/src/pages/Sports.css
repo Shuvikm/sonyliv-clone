@@ -184,35 +184,35 @@
   .sports-page {
     padding: 1rem 0;
   }
-  
+
   .page-title {
     font-size: 2.5rem;
   }
-  
+
   .page-subtitle {
     font-size: 1rem;
   }
-  
+
   .filters-section {
     padding: 1.5rem;
     margin-bottom: 2rem;
   }
-  
+
   .filters-header {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
-  
+
   .filters-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .no-results {
     padding: 3rem 1rem;
   }
-  
+
   .no-results-icon {
     font-size: 3rem;
   }
@@ -222,14 +222,75 @@
   .page-title {
     font-size: 2rem;
   }
-  
+
   .filters-section {
     padding: 1rem;
   }
-  
+
   .filter-group select,
   .search-input-group input {
     padding: 10px;
     font-size: 0.8rem;
   }
-} 
+}
+
+/* Sports Grid and Card Wrapper */
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.sport-card-wrapper {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sport-card-wrapper:hover {
+  transform: translateY(-8px);
+}
+
+.sport-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(229, 9, 20, 0.85);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+.sport-card-wrapper:hover .sport-play-overlay {
+  opacity: 1;
+}
+
+.sport-play-overlay svg {
+  font-size: 40px;
+  color: #fff;
+}
+
+.sport-play-overlay span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .sports-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .sport-play-overlay svg {
+    font-size: 30px;
+  }
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 import ContentCard from '../components/ContentCard';
-import { searchTVShows } from '../services/api';
+import { searchTVSeries, getPopularTVSeries } from '../services/api';
 import './Serials.css';
 
 const Serials = () => {
@@ -28,11 +28,16 @@ const Serials = () => {
     const fetchSerials = async () => {
       try {
         setLoading(true);
-        const searchResults = await searchTVShows(filters.search);
-        setSerials(searchResults);
+        let results;
+        if (filters.search && filters.search.trim() !== '') {
+          results = await searchTVSeries(filters.search);
+        } else {
+          results = await getPopularTVSeries();
+        }
+        setSerials(results);
       } catch (error) {
         console.error('Error fetching TV shows:', error);
-        setSerials(mockSerialsData);
+        setSerials([]);
       } finally {
         setLoading(false);
       }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 import ContentCard from '../components/ContentCard';
-import { searchMovies, getMovieDetails } from '../services/api';
+import { searchMovies, getPopularMovies, getTrendingMovies, getContentDetails } from '../services/api';
 import './Movies.css';
 
 const Movies = () => {
@@ -15,13 +15,13 @@ const Movies = () => {
     search: ''
   });
   const [genres] = useState([
-    'Action', 'Adventure', 'Comedy', 'Drama', 'Horror', 
+    'Action', 'Adventure', 'Comedy', 'Drama', 'Horror',
     'Romance', 'Sci-Fi', 'Thriller', 'Documentary', 'Animation'
   ]);
   const [languages] = useState([
     'All Languages', 'English', 'Hindi', 'Tamil', 'Telugu', 'Malayalam', 'Kannada', 'Bengali', 'Marathi', 'Gujarati', 'Punjabi'
   ]);
-  const [years] = useState(Array.from({length: 25}, (_, i) => 2024 - i));
+  const [years] = useState(Array.from({ length: 25 }, (_, i) => 2024 - i));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,11 +34,27 @@ const Movies = () => {
     const fetchMovies = async () => {
       try {
         setLoading(true);
-        const searchResults = await searchMovies(filters.search);
-        setMovies(searchResults);
+        let results;
+        if (filters.search && filters.search.trim() !== '') {
+          results = await searchMovies(filters.search);
+        } else {
+          // Get both popular and trending movies
+          const [popular, trending] = await Promise.all([
+            getPopularMovies(),
+            getTrendingMovies()
+          ]);
+          // Combine and remove duplicates
+          const combined = [...trending, ...popular];
+          const uniqueMovies = combined.filter((movie, index, arr) =>
+            arr.findIndex(m => m._id === movie._id) === index
+          );
+          results = uniqueMovies;
+        }
+        setMovies(results);
       } catch (error) {
         console.error('Error fetching movies:', error);
-        setMovies(mockMoviesData);
+        // Fallback to empty array if no mock data
+        setMovies([]);
       } finally {
         setLoading(false);
       }
@@ -66,12 +82,12 @@ const Movies = () => {
   };
 
   const handleMovieClick = async (movie) => {
-    if (movie.imdbID) {
+    if (movie._id) {
       try {
-        const details = await getMovieDetails(movie.imdbID);
+        const details = await getContentDetails(movie._id, 'movie');
         if (details) {
           // Navigate to movie details page
-          window.location.href = `/content/${movie.imdbID}`;
+          window.location.href = `/content/${movie._id}?type=movie`;
         }
       } catch (error) {
         console.error('Error fetching movie details:', error);
@@ -87,21 +103,21 @@ const Movies = () => {
         return false;
       }
     }
-    
+
     // Genre filter
     if (filters.genre) {
       if (!movie.genre || !movie.genre.some(g => g.toLowerCase().includes(filters.genre.toLowerCase()))) {
         return false;
       }
     }
-    
+
     // Year filter
     if (filters.year) {
       if (!movie.releaseYear || movie.releaseYear !== parseInt(filters.year)) {
         return false;
       }
     }
-    
+
     return true;
   });
 
@@ -132,7 +148,7 @@ const Movies = () => {
               Clear All
             </button>
           </div>
-          
+
           <div className="filters-grid">
             {/* Search */}
             <div className="filter-group">
@@ -206,7 +222,7 @@ const Movies = () => {
               </p>
             )}
           </div>
-          
+
           {filteredMovies.length > 0 ? (
             <div className="content-grid">
               {filteredMovies.map((movie) => (

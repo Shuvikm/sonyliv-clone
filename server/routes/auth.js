@@ -57,16 +57,35 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Demo mode - allow test login without MongoDB
+    if (email === 'demo@sonyliv.com' && password === 'demo123') {
+      const token = jwt.sign(
+        { userId: 'demo_user', email: 'demo@sonyliv.com' },
+        process.env.JWT_SECRET || 'your-secret-key',
+        { expiresIn: '7d' }
+      );
+      return res.json({
+        message: 'Login successful (Demo Mode)',
+        token,
+        user: {
+          id: 'demo_user',
+          username: 'Demo User',
+          email: 'demo@sonyliv.com',
+          profilePicture: null
+        }
+      });
+    }
+
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials. Try demo@sonyliv.com / demo123' });
     }
 
     // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials. Try demo@sonyliv.com / demo123' });
     }
 
     // Generate JWT token
@@ -89,7 +108,8 @@ router.post('/login', async (req, res) => {
 
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Login failed' });
+    // If MongoDB is not connected, suggest demo login
+    res.status(401).json({ error: 'Login failed. Try demo@sonyliv.com / demo123' });
   }
 });
 
@@ -97,7 +117,7 @@ router.post('/login', async (req, res) => {
 router.get('/profile', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
-    
+
     if (!token) {
       return res.status(401).json({ error: 'No token provided' });
     }

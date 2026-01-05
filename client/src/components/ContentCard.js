@@ -46,17 +46,17 @@ const ContentCard = ({ content }) => {
   };
 
   return (
-    <Link to={`/content/${content._id}`} className="content-card">
+    <Link to={`/content/${content._id}?type=${content.type || 'movie'}`} className="content-card">
       <div className="card-image-container">
-        <img 
-          src={content.poster} 
+        <img
+          src={content.poster}
           alt={content.title}
           className="card-image"
           onError={(e) => {
             e.target.src = `https://via.placeholder.com/300x450/${getTypeColor(content.type).replace('#', '')}/ffffff?text=${encodeURIComponent(content.title)}`;
           }}
         />
-        
+
         {/* Live indicator */}
         {content.isLive && (
           <div className="live-indicator">
@@ -64,32 +64,32 @@ const ContentCard = ({ content }) => {
             <span>LIVE</span>
           </div>
         )}
-        
+
         {/* Play button overlay */}
         <div className="play-overlay">
           <FaPlay />
         </div>
-        
+
         {/* Type indicator */}
-        <div 
+        <div
           className="type-indicator"
           style={{ backgroundColor: getTypeColor(content.type) }}
         >
           {getTypeIcon(content.type)}
         </div>
       </div>
-      
+
       <div className="card-content">
         <h3 className="card-title">{content.title}</h3>
         <p className="card-description">{content.description}</p>
-        
+
         <div className="card-meta">
           <div className="card-genres">
             {content.genre && content.genre.slice(0, 2).map((genre, index) => (
               <span key={index} className="genre-tag">{genre}</span>
             ))}
           </div>
-          
+
           <div className="card-stats">
             {content.rating && (
               <div className="rating">
@@ -97,7 +97,7 @@ const ContentCard = ({ content }) => {
                 <span>{content.rating}</span>
               </div>
             )}
-            
+
             {content.views && (
               <div className="views">
                 <FaEye />

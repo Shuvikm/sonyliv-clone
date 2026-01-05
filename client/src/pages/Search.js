@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import ContentCard from '../components/ContentCard';
-import api from '../services/api';
+import * as api from '../services/api';
 import './Search.css';
 
 const Search = () => {
@@ -24,11 +24,25 @@ const Search = () => {
 
     setLoading(true);
     try {
-      const response = await api.get(`/content/search/${encodeURIComponent(query)}`);
-      setResults(response.data.results || []);
+      // Use real TMDB search functions
+      const [movies, series] = await Promise.all([
+        api.searchMovies(query),
+        api.searchTVSeries(query)
+      ]);
+
+      // Combine and interleave results for variety
+      const combined = [];
+      const maxLength = Math.max(movies.length, series.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        if (i < movies.length) combined.push(movies[i]);
+        if (i < series.length) combined.push(series[i]);
+      }
+
+      setResults(combined);
     } catch (error) {
       console.error('Search error:', error);
-      // Mock results for development
+      // Fallback to local mock results if API fails completely
       setResults(mockSearchResults);
     } finally {
       setLoading(false);
@@ -77,7 +91,7 @@ const Search = () => {
                 Search Results for "{searchQuery}" ({results.length} items)
               </h3>
             </div>
-            
+
             {loading ? (
               <div className="loading">
                 <div className="spinner"></div>

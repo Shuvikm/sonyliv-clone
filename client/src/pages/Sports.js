@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaFilter, FaSearch } from 'react-icons/fa';
+import { FaFilter, FaSearch, FaPlay } from 'react-icons/fa';
 import ContentCard from '../components/ContentCard';
 import { searchSports } from '../services/api';
 import './Sports.css';
@@ -14,7 +14,7 @@ const Sports = () => {
   });
   const [sportTypes] = useState([
     'Football', 'Basketball', 'Tennis', 'Cricket', 'Baseball',
-    'Soccer', 'Hockey', 'Golf', 'Boxing', 'MMA'
+    'Racing', 'Golf', 'Boxing', 'MMA', 'American Football'
   ]);
   const navigate = useNavigate();
 
@@ -32,8 +32,7 @@ const Sports = () => {
         setSports(searchResults);
       } catch (error) {
         console.error('Error fetching sports:', error);
-        // Fallback to mock data
-        setSports(mockSportsData);
+        setSports([]);
       } finally {
         setLoading(false);
       }
@@ -58,6 +57,19 @@ const Sports = () => {
     });
   };
 
+  const handleSportClick = (sport) => {
+    // Navigate to watch page for sports
+    navigate(`/watch/${sport._id}/sport`, { state: { content: sport } });
+  };
+
+  // Filter sports by sport type
+  const filteredSports = sports.filter(sport => {
+    if (filters.sportType && sport.sportType !== filters.sportType) {
+      return false;
+    }
+    return true;
+  });
+
   if (loading) {
     return (
       <div className="loading">
@@ -70,9 +82,9 @@ const Sports = () => {
     <div className="sports-page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">Sports</h1>
+          <h1 className="page-title">⚽ Live Sports</h1>
           <p className="page-subtitle">
-            Watch live sports events and highlights
+            Watch live sports events, highlights and replays
           </p>
         </div>
 
@@ -83,7 +95,7 @@ const Sports = () => {
               Clear All
             </button>
           </div>
-          
+
           <div className="filters-grid">
             <div className="filter-group">
               <label>Search Sports</label>
@@ -91,7 +103,7 @@ const Sports = () => {
                 <FaSearch />
                 <input
                   type="text"
-                  placeholder="Search for sports events (e.g., Premier League, NBA, Tennis)..."
+                  placeholder="Search for sports events (e.g., Premier League, NBA, Cricket)..."
                   value={filters.search}
                   onChange={(e) => handleFilterChange('search', e.target.value)}
                 />
@@ -115,18 +127,28 @@ const Sports = () => {
 
         <div className="results-section">
           <div className="results-header">
-            <h3>Results ({sports.length} events)</h3>
+            <h3>Events ({filteredSports.length})</h3>
             {filters.search && (
               <p className="search-info">
                 Showing results for: <strong>"{filters.search}"</strong>
               </p>
             )}
           </div>
-          
-          {sports.length > 0 ? (
-            <div className="content-grid">
-              {sports.map((sport) => (
-                <ContentCard key={sport._id} content={sport} />
+
+          {filteredSports.length > 0 ? (
+            <div className="content-grid sports-grid">
+              {filteredSports.map((sport) => (
+                <div
+                  key={sport._id}
+                  className="sport-card-wrapper"
+                  onClick={() => handleSportClick(sport)}
+                >
+                  <ContentCard content={sport} />
+                  <div className="sport-play-overlay">
+                    <FaPlay />
+                    <span>Watch Now</span>
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
@@ -139,9 +161,9 @@ const Sports = () => {
                 <div className="suggestion-tags">
                   <button onClick={() => handleFilterChange('search', 'Premier League')}>Premier League</button>
                   <button onClick={() => handleFilterChange('search', 'NBA')}>NBA</button>
-                  <button onClick={() => handleFilterChange('search', 'Tennis')}>Tennis</button>
                   <button onClick={() => handleFilterChange('search', 'Cricket')}>Cricket</button>
-                  <button onClick={() => handleFilterChange('search', 'Football')}>Football</button>
+                  <button onClick={() => handleFilterChange('search', 'IPL')}>IPL</button>
+                  <button onClick={() => handleFilterChange('search', 'F1')}>Formula 1</button>
                 </div>
               </div>
             </div>

@@ -41,9 +41,10 @@ const Navbar = () => {
           <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/movies" className="nav-link">Movies</Link>
+            <Link to="/serials" className="nav-link">TV Series</Link>
+            <Link to="/anime" className="nav-link">Anime</Link>
             <Link to="/sports" className="nav-link">Sports</Link>
             <Link to="/news" className="nav-link">News</Link>
-            <Link to="/serials" className="nav-link">Serials</Link>
           </div>
 
           {/* Search Bar */}
@@ -85,9 +86,10 @@ const Navbar = () => {
         <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
           <Link to="/" className="mobile-nav-link" onClick={toggleMenu}>Home</Link>
           <Link to="/movies" className="mobile-nav-link" onClick={toggleMenu}>Movies</Link>
+          <Link to="/serials" className="mobile-nav-link" onClick={toggleMenu}>TV Series</Link>
+          <Link to="/anime" className="mobile-nav-link" onClick={toggleMenu}>Anime</Link>
           <Link to="/sports" className="mobile-nav-link" onClick={toggleMenu}>Sports</Link>
           <Link to="/news" className="mobile-nav-link" onClick={toggleMenu}>News</Link>
-          <Link to="/serials" className="mobile-nav-link" onClick={toggleMenu}>Serials</Link>
           {!isAuthenticated && (
             <Link to="/login" className="mobile-nav-link" onClick={toggleMenu}>Login</Link>
           )}
