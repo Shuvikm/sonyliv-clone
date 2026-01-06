@@ -457,7 +457,7 @@ export const getMovieVideos = async (movieId) => {
       (v.type === 'Trailer' || v.type === 'Teaser' || v.type === 'Clip')
     );
 
-    return trailers.map(video => ({
+    const formattedVideos = trailers.map(video => ({
       id: video.id,
       key: video.key,
       name: video.name,
@@ -465,9 +465,32 @@ export const getMovieVideos = async (movieId) => {
       url: `https://www.youtube.com/embed/${video.key}`,
       thumbnail: `https://img.youtube.com/vi/${video.key}/hqdefault.jpg`
     }));
+
+    // If no videos found, return a fallback generic movie trailer
+    if (formattedVideos.length === 0) {
+      console.warn(`No videos found for movie ${movieId}, using fallback trailer`);
+      return [{
+        id: 'fallback',
+        key: 'TcMBFSGVi1c',
+        name: 'Trailer',
+        type: 'Trailer',
+        url: 'https://www.youtube.com/embed/TcMBFSGVi1c',
+        thumbnail: 'https://img.youtube.com/vi/TcMBFSGVi1c/hqdefault.jpg'
+      }];
+    }
+
+    return formattedVideos;
   } catch (error) {
     console.error('Error fetching movie videos:', error);
-    return [];
+    // Return fallback trailer on error
+    return [{
+      id: 'fallback',
+      key: 'TcMBFSGVi1c',
+      name: 'Trailer',
+      type: 'Trailer',
+      url: 'https://www.youtube.com/embed/TcMBFSGVi1c',
+      thumbnail: 'https://img.youtube.com/vi/TcMBFSGVi1c/hqdefault.jpg'
+    }];
   }
 };
 
@@ -482,7 +505,7 @@ export const getTVVideos = async (tvId) => {
       (v.type === 'Trailer' || v.type === 'Teaser' || v.type === 'Clip' || v.type === 'Opening Credits')
     );
 
-    return trailers.map(video => ({
+    const formattedVideos = trailers.map(video => ({
       id: video.id,
       key: video.key,
       name: video.name,
@@ -490,9 +513,32 @@ export const getTVVideos = async (tvId) => {
       url: `https://www.youtube.com/embed/${video.key}`,
       thumbnail: `https://img.youtube.com/vi/${video.key}/hqdefault.jpg`
     }));
+
+    // If no videos found, return a fallback TV series trailer
+    if (formattedVideos.length === 0) {
+      console.warn(`No videos found for TV show ${tvId}, using fallback trailer`);
+      return [{
+        id: 'fallback',
+        key: 'HhesaQXLuRY',
+        name: 'Trailer',
+        type: 'Trailer',
+        url: 'https://www.youtube.com/embed/HhesaQXLuRY',
+        thumbnail: 'https://img.youtube.com/vi/HhesaQXLuRY/hqdefault.jpg'
+      }];
+    }
+
+    return formattedVideos;
   } catch (error) {
     console.error('Error fetching TV videos:', error);
-    return [];
+    // Return fallback trailer on error
+    return [{
+      id: 'fallback',
+      key: 'HhesaQXLuRY',
+      name: 'Trailer',
+      type: 'Trailer',
+      url: 'https://www.youtube.com/embed/HhesaQXLuRY',
+      thumbnail: 'https://img.youtube.com/vi/HhesaQXLuRY/hqdefault.jpg'
+    }];
   }
 };
 

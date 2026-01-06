@@ -23,7 +23,8 @@
 .video-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  padding-bottom: 56.25%;
+  /* 16:9 Aspect Ratio */
   height: 0;
   overflow: hidden;
 }
@@ -103,8 +104,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .video-player-error h3 {
@@ -218,6 +226,65 @@
 .control-btn svg {
   font-size: 16px;
 }
+
+/* Progress Bar */
+.progress-bar {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.progress-filled {
+  position: absolute;
+  height: 100%;
+  background: #e50914;
+  border-radius: 3px;
+}
+
+/* Time label */
+.time-label {
+  color: #fff;
+  font-size: 12px;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Volume Slider */
+.volume-slider {
+  width: 80px;
+  margin: 0 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  height: 4px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #e50914;
+  border-radius: 50%;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #e50914;
+  border-radius: 50%;
+}
+
+/* Glassmorphism overlay background */
+.video-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+
 
 .close-video-btn {
   background: rgba(229, 9, 20, 0.8);
