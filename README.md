@@ -6,7 +6,7 @@ A modern streaming platform clone built with React.js and MongoDB, featuring rea
 
 ### 🎬 **Real API Integration**
 - **Movies**: OMDB API for movie search and details
-- **News**: News API for latest articles and updates
+- **News**: News API for latest articles and updates.
 - **TV Shows**: TV Maze API for series and episodes
 - **Sports**: Enhanced sports content with live event tracking
 
