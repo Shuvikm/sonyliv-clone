@@ -24,7 +24,7 @@ A modern streaming platform clone built with React.js and MongoDB, featuring rea
 - Loading states and error handling
 - Search suggestions and popular tags
 
-### 🔐 **Authentication System**
+### 🔐 ***Authentication System***
 - User registration and login
 - JWT token-based authentication
 - Protected routes
